@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Form - MotoHeadz</title>
+    <style>
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+.register-form {
+  padding: 30px 15px !important; }
+  .signupimg>img{
+    height:100% !important;
+  }
+  .page-header{
+    height: 240px !important;
+  }
+  
+  /* .register-form > .form-group > input, select {
+    border: 2px solid var(--primary);
+    outline: var(--primary);
+  } */
+    
+    </style>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="reg/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="reg/css/style.css">
+</head>
+
+<body>
+    <!-- Register -->
+    <?php
+    ob_start();
+    include "__partials/_nav.php";
+    // include "__partials/_search.php";
+    ?>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header">
+        <h1 class="display-3 text-uppercase text-white mb-3">Update Your Vehicle</h1>
+        <div class="d-inline-flex text-white">
+            <h6 class="text-uppercase m-0"><a class="text-white" href="">Home</a></h6>
+            <h6 class="text-body m-0 px-3">/</h6>
+            <h6 class="text-uppercase text-body m-0">Update Product</h6>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <div class="main">
+        <div class="container mt-3">
+            <div class="signup-content" style="display: flex; justify-content: center; align-items: center;">
+                <div class="signup-img">
+                    <img src="img/signup.jpg" class="signupimg" height="100%" alt="">
+                </div>
+
+                <div class="signup-form" style="width:60%">
+                    <form method="POST" action="addproduct.php" class="register-form" id="register-form">
+                        <h2>Add Vehicle</h2>
+
+                        <div class="form-group">
+                            <label for="vname">Vehicle-Name :</label>
+                            <input type="text" name="vname" id="vname" required />
+                            <!-- <span class="text-warning">Vehicle-Name does not contain Special Characters</span> -->
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="vtype">Select-Type :</label>
+                            <Select name="vtype" id="vtype">
+                                <option value="1">Two-Wheeler</option>
+                                <option value="2">Four-Wheeler</option>
+                            </Select>
+                        </div>
+                        <div class="form-group">
+                            <label for="brand">Select-Brand :</label>
+                            <Select name="brand" id="brand">
+                                <?php
+                                $sqlb="SELECT * FROM `product_brand_tbl` ORDER BY `product_brand_tbl`.`Brand` ASC";
+                                $resultb=mysqli_query($conn,$sqlb);
+                                while($rowb=mysqli_fetch_assoc($resultb)){
+                                    $brid=$rowb['Brand_Id'];
+                                    $br=$rowb['Brand'];
+                                    echo '<option value='.$brid.'>'.$br.'</option>';
+                                }
+                                ?>
+                                <!-- <option value="1">Mahindra</option>
+                                <option value="2">Suzuki</option>
+                                <option value="3">Honda</option>
+                                <option value="3">Bajaj</option> -->
+                            </Select>
+                        </div>
+                        <div class="form-group">
+                            <label for="trans">Transmission-Type :</label>
+                            <Select name="trans" id="trans">
+                                <option value="1">Manual</option>
+                                <option value="2">Automatic</option>
+                            </Select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Avfor">Available-For :</label>
+                            <!-- Product-Type -->
+                            <Select name="Avfor" id="Avfor">
+                                <option value="1">Sell</option>
+                                <option value="2">Rent</option>
+                            </Select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vdesc">Vehicle-Description :</label>
+                            <input type="text" name="vdesc" id="vdesc" placeholder="Enter short description of product" />
+                            <!-- <span class="text-warning">Must be atleast 100 Characters</span> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Vehicle-Registration-Number :</label>
+                            <input type="text" name="regno" id="regno" placeholder="Ex: GJ01XY1234"  required />
+                            <!-- <span class="text-warning">Must be atleast 8 Characters</span> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Vehicle-RC Book :</label>
+                            <img src="img/vrc1.png" alt="">
+                            <div class="text-warning">RC Book Cannot be updated please contact admin for more details</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Vehicle-PUC :</label>
+                            <input type="file" name="email" id="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Vehicle-Insurance :</label>
+                            <input type="file" name="email" id="email"/> 
+                        </div>
+                        
+                        
+                        <div class="form-submit">
+                            <input type="reset" value="Reset All" class="submit" name="reset" id="reset" />
+                            <button type="submit" name="submit" class="submit" id="submit">Next &gt</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    
+    <?php
+    include "__partials/_footer.php";
+    include "__partials/_js.php";
+    function postres($conn, $var)
+        {
+            return mysqli_real_escape_string($conn, $_POST[$var]);
+        }
+        ob_end_flush();
+    ?>
+
+    <!-- Register End -->
+    <!-- JS -->
+    <script src="reg/vendor/jquery/jquery.min.js"></script>
+    <script src="reg/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
